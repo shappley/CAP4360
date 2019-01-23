@@ -69,6 +69,16 @@ class State:
     def seats(self, value):
         self._seats = value
 
+    def formatted_str(self):
+        return "%-17s: %s\n%-17s: %s\n%-17s: %s\n%-17s: %s\n%-17s: %s\n%-17s: %s\n" % (
+            "State Name", self.name,
+            "Capital City", self.capital,
+            "State Abbr", self.abbr,
+            "State Population", "{:,}".format(self.population),
+            "Region", self.region,
+            "US House Seats", self.seats
+        )
+
     def __gt__(self, other):
         return self.name() > other.name()
 
