@@ -23,53 +23,98 @@ class State:
 
     @property
     def name(self):
+        """
+        :return: the state name
+        """
         return self._name
 
     @name.setter
     def name(self, value):
+        """
+        sets the state name to the specified value
+        :param value the new name of the state
+        """
         self._name = value
 
     @property
     def capital(self):
+        """
+        :return: the state capital city
+        """
         return self._capital
 
     @capital.setter
     def capital(self, value):
+        """
+        sets the state capital to the specified value
+        :param value the new capital of the state
+        """
         self._capital = value
 
     @property
     def abbr(self):
+        """
+        :return: the state abbreviation
+        """
         return self._abbr
 
     @abbr.setter
     def abbr(self, value):
+        """
+        sets the state name to the specified value
+        :param value the new name of the state
+        """
         self._abbr = value
 
     @property
     def population(self):
+        """
+        :return: the state population
+        """
         return self._population
 
     @population.setter
     def population(self, value):
+        """
+        sets the state population to the specified value
+        :param value the new population of the state
+        """
         self._population = value
 
     @property
     def region(self):
+        """
+        :return: the state region
+        """
         return self._region
 
     @region.setter
     def region(self, value):
+        """
+        sets the state region to the specified value
+        :param value the new region of the state
+        """
         self._region = value
 
     @property
     def seats(self):
+        """
+        :return: the state US House Seats
+        """
         return self._seats
 
     @seats.setter
     def seats(self, value):
+        """
+        sets the state US House Seats to the specified value
+        :param value the new US House Seats of the state
+        """
         self._seats = value
 
     def formatted_str(self):
+        """
+        :return: a formatted string containing all info about the state
+        """
         return "%-17s: %s\n%-17s: %s\n%-17s: %s\n%-17s: %s\n%-17s: %s\n%-17s: %s\n" % (
             "State Name", self.name,
             "Capital City", self.capital,

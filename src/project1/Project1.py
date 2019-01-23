@@ -1,3 +1,8 @@
+"""
+Stephen Shappley
+N01184718@ospreys.unf.edu
+"""
+
 import csv
 from States import States
 from State import State
@@ -21,6 +26,11 @@ def read_states_csv(filename):
 
 
 def prompt_user():
+    """
+    Prompts the user to select an option.
+    Loops until the user enters something valid.
+    :return: the valid number the user entered
+    """
     i = 0
     invalid = True
     while invalid:
