@@ -1,4 +1,5 @@
 import Sort
+import Search
 
 
 class States:
@@ -26,3 +27,13 @@ class States:
 
     def sort_by_population(self):
         Sort.radix_sort(self._states, key=lambda k: k.population)
+        self._sorted_by_name = False
+
+    def search_by_name(self, name):
+        i = Search.binary_search(self._states, name, key=lambda k: k.name) \
+            if self._sorted_by_name \
+            else Search.sequential_search(self._states, name, key=lambda k: k.name)
+        if i == -1:
+            return None
+        else:
+            return self._states[i]
