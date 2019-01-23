@@ -30,9 +30,9 @@ class States:
         self._sorted_by_name = False
 
     def search_by_name(self, name):
-        i = Search.binary_search(self._states, name, key=lambda k: k.name) \
+        i = Search.binary_search(self._states, name.lower(), key=lambda k: k.name.lower()) \
             if self._sorted_by_name \
-            else Search.sequential_search(self._states, name, key=lambda k: k.name)
+            else Search.sequential_search(self._states, name.lower(), key=lambda k: k.name.lower())
         if i == -1:
             return None
         else:
