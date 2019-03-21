@@ -44,6 +44,9 @@ class UserPreferencesGUI:
         Button(frame, text="Load", command=lambda: self.load_file(self._preferences)) \
             .grid(row=0, column=5, sticky=E, padx=10)
 
+        Label(frame, text="Results", font="Consolas 11 bold").grid(row=0, column=6, sticky=W, padx=10)
+        Button(frame, text="Generate").grid(row=0, column=7, padx=10, pady=10, sticky=E)
+
         self._attributes = Text(frame, width=35, borderwidth=2, relief=SOLID)
         self._attributes.grid(row=1, column=0, columnspan=2, padx=10, pady=10, sticky=W + E)
 
@@ -53,13 +56,8 @@ class UserPreferencesGUI:
         self._preferences = Text(frame, width=35, borderwidth=2, relief=SOLID)
         self._preferences.grid(row=1, column=4, columnspan=2, padx=10, pady=10, sticky=W + E)
 
-        self._results = Text(frame, height=5, borderwidth=2, relief=SOLID)
-        self._results.grid(row=2, column=0, columnspan=4, padx=10, pady=10)
-
-        Button(frame, text="Run").grid(row=2, column=4, columnspan=2, padx=10, pady=10, sticky=N + E + S + W)
+        self._results = Text(frame, width=35, borderwidth=2, relief=SOLID)
+        self._results.grid(row=1, column=6, columnspan=2, padx=10, pady=10)
 
         frame.pack()
         root.mainloop()
-
-
-UserPreferencesGUI()
