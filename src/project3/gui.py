@@ -110,15 +110,18 @@ class UserPreferencesGUI:
             print "running clasp"
             results = self.run_clasp("clasp_in.txt")
             clasp_objects = self.get_objects_from_clasp(results)
+            if len(clasp_objects) == 0:
+                self.set_results("There are no feasible objects")
+                return
             # -------------------------------------------------------------------------------------------------- #
             print "parsing preferences"
             preferences = []
             for p in self.get_preferences().split("\n"):
                 p = p.strip()
                 if p != "":
-                    match = re.match("(?P<preference>[a-zA-Z\s]+)\s*,\s*(?P<penalty>\d+)", p)
+                    match = re.match("(?P<preference>[a-zA-Z-\s]+)\s*,\s*(?P<penalty>\d+)", p)
                     if match is None:
-                        raise Exception("Invalid Preference format")
+                        raise Exception("Invalid Preference format: \n\t%s" % p)
                     pref = match.group("preference")
                     penalty = match.group("penalty")
                     preferences.append(Preference(pref, int(penalty)))
@@ -132,9 +135,6 @@ class UserPreferencesGUI:
             self.append_results("{:^50}".format("FEASIBLE OBJECTS"))
             self.append_results("\n{:-^50}\n".format(""))
             self.append_results("There are " + str(len(clasp_objects)) + " feasible objects")
-
-            if len(clasp_objects) == 0:
-                return
 
             self.append_results("\n\n{:-^50}\n".format(""))
             self.append_results("{:^50}\n".format("EXEMPLIFICATION"))
