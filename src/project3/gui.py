@@ -1,3 +1,9 @@
+"""
+Stephen Shappley
+N01184718
+CAP4630 - Project 3 - Spring 2019
+"""
+
 import random
 import tkFileDialog as filedialog
 from Tkinter import *
@@ -184,6 +190,3 @@ class UserPreferencesGUI:
         process = Popen(["clasp", "0", filename], stdout=PIPE, stderr=PIPE)
         out, err = process.communicate()
         return out
-
-
-UserPreferencesGUI()
