@@ -34,6 +34,9 @@ class UserPreferencesGUI:
         self._results.delete(1.0, END)
         self._results.insert(END, value)
 
+    def append_results(self, value):
+        self._results.insert(END, value)
+
     def gui(self):
         root = Tk()
         root.title("CAP4630 Project 3: User Preferences")
@@ -55,22 +58,23 @@ class UserPreferencesGUI:
         Label(frame, text="Results", font="Consolas 11 bold").grid(row=0, column=6, sticky=W, padx=10)
         Button(frame, text="Generate", command=self.generate_results).grid(row=0, column=7, padx=10, pady=10, sticky=E)
 
-        self._attributes = Text(frame, width=35, borderwidth=2, relief=SOLID)
+        self._attributes = Text(frame, width=40, borderwidth=2, relief=SOLID)
         self._attributes.grid(row=1, column=0, columnspan=2, padx=10, pady=10, sticky=W + E)
 
-        self._constraints = Text(frame, width=35, borderwidth=2, relief=SOLID)
+        self._constraints = Text(frame, width=40, borderwidth=2, relief=SOLID)
         self._constraints.grid(row=1, column=2, columnspan=2, padx=10, pady=10, sticky=W + E)
 
-        self._preferences = Text(frame, width=35, borderwidth=2, relief=SOLID)
+        self._preferences = Text(frame, width=40, borderwidth=2, relief=SOLID)
         self._preferences.grid(row=1, column=4, columnspan=2, padx=10, pady=10, sticky=W + E)
 
-        self._results = Text(frame, width=35, borderwidth=2, relief=SOLID)
+        self._results = Text(frame, width=40, borderwidth=2, relief=SOLID)
         self._results.grid(row=1, column=6, columnspan=2, padx=10, pady=10)
 
         frame.pack()
         root.mainloop()
 
     def generate_results(self):
+        self.set_results("")
         print "generating results"
         try:
             attributes = Attributes()
@@ -87,7 +91,6 @@ class UserPreferencesGUI:
                 c = Constraint(s)
                 constraints.append(c)
             clasp = "p cnf %s %s\n" % (attributes.length(), len(constraints))
-            print clasp
             for c in constraints:
                 parse = c.parse_to_clasp(attributes)
                 if parse != "0":
@@ -96,10 +99,23 @@ class UserPreferencesGUI:
             self.write_to_file("clasp_in.txt", clasp)
             print "running clasp"
             results = self.run_clasp("clasp_in.txt")
-            print results
-            self.set_results(results)
+            self.append_results("{:-^40}\n".format(""))
+            self.append_results("{:^40}".format("FEASIBLE OBJECTS"))
+            self.append_results("\n{:-^40}\n".format(""))
+            self.append_results(self.format_clasp_results(results, attributes))
         except Exception as ex:
             self.set_results(ex.message)
+
+    def format_clasp_results(self, clasp, attributes):
+        results = ""
+        i = 1
+        for s in clasp.split("\n"):
+            if s.startswith("v"):
+                results = results + str(i) + ". " + attributes.from_clasp(s[2:]) + "\n"
+                i = i + 1
+        if results == "":
+            results = "No Feasible Objects"
+        return results
 
     def write_to_file(self, filename, value):
         with open(filename, "w") as f:

@@ -49,8 +49,21 @@ class Attributes:
             index = -index
         return index
 
+    def from_clasp(self, value):
+        res = ""
+        for s in value.strip()[:-2].split(" "):
+            val = int(s)
+            val_index = 0
+            if val < 0:
+                val_index = 1
+            res = res + self.get_attributes()[abs(val) - 1].values()[val_index] + ", "
+        return res[:-2]
+
     def contains(self, value):
         return self.index_of(value) != -1
 
     def length(self):
         return len(self._attributes)
+
+    def get_attributes(self):
+        return self._attributes
